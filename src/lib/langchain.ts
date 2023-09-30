@@ -16,7 +16,6 @@ type callChainArgs = {
 
 export async function callChain({ question, chatHistory }: callChainArgs) {
     try {
-        // Open AI recommendation
         const sanitizedQuestion = question.trim().replaceAll("\n", " ");
         const pineconeClient = await getPineconeClient();
         const vectorStore = await getVectorStore(pineconeClient);
@@ -31,7 +30,7 @@ export async function callChain({ question, chatHistory }: callChainArgs) {
             {
                 qaTemplate: QA_TEMPLATE,
                 questionGeneratorTemplate: STANDALONE_QUESTION_TEMPLATE,
-                returnSourceDocuments: true, //default 4
+                returnSourceDocuments: true,
                 questionGeneratorChainOptions: {
                     llm: nonStreamingModel,
                 },
@@ -57,9 +56,9 @@ export async function callChain({ question, chatHistory }: callChainArgs) {
                     sources: pageContents,
                 });
                 data.close();
-            });
+            })
+            .catch((e) => console.log(e));
 
-        // Return the readable stream
         return new StreamingTextResponse(stream, {}, data);
     } catch (e) {
         console.error(e);
