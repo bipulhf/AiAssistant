@@ -41,7 +41,7 @@ export const initialMessages: Message[] = [
     {
         role: "assistant",
         id: "0",
-        content: "ছাদকৃষি সম্পর্কিত আপনার প্রশ্ন করুন.",
+        content: "Ask me questions about Rooftop Gardening.",
     },
 ];
 
